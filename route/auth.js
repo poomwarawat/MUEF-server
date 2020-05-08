@@ -3,6 +3,10 @@ const con = require('../config/con');
 const { registerValidation, loginValidation} = require('../validation/authValidation');
 const md5 = require('md5');
 
+router.get("/test", (req, res) => {
+    return res.send("Hello")
+})
+
 router.get("/get-access-user/:access", (req, res) => {
     console.log(req.params)
     const sql = `SELECT username FROM user WHERE salt='${req.params.access}'`
