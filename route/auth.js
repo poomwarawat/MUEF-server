@@ -4,7 +4,7 @@ const { registerValidation, loginValidation} = require('../validation/authValida
 const md5 = require('md5');
 
 router.get("/test", (req, res) => {
-    return res.send("Hello world")
+    return res.send("Hello world!!!")
 })
 
 router.get("/get-access-user/:access", (req, res) => {
