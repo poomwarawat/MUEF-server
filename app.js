@@ -5,6 +5,9 @@ const app = express();
 const con = require('./config/con');
 const multer = require("multer");
 const upload = multer();
+const dotenv = require('dotenv');
+
+dotenv.config()
 
 //app setup
 //----app setup
@@ -32,5 +35,5 @@ app.use("/", authRoute)
 app.use("/", muefTestRoute)
 app.use("/", Question)
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// const PORT = process.env.PORT || 8080;
+app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
