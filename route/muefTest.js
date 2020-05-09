@@ -80,6 +80,152 @@ router.get("/get-student/:id", (req, res) => {
     })
 })
 
+router.post("/send-score", (req, res) => {
+    console.log(req.body)
+    const { score, mode, codeId } = req.body
+    if(mode === "INH"){        
+        const sql = `INSERT INTO test_result (codeId, INH) VALUES ('${codeId}',${parseInt(score)})`
+        con.query(sql, (err, result) => {
+            if(err) throw err
+            if(result){
+                return res.status(200).send({add : true})
+            }
+        })
+    }
+    if(mode === "SHF"){
+        const sql = `UPDATE test_result SET SHF=${parseInt(score)} WHERE codeId='${codeId}'`
+        con.query(sql, (err, result) => {
+            if(err) throw err
+            if(result){
+                return res.status(200).send({add : true})
+            }
+        })
+    } 
+    if(mode === "EC"){
+        const sql = `UPDATE test_result SET EC=${parseInt(score)} WHERE codeId='${codeId}'`
+        con.query(sql, (err, result) => {
+            if(err) throw err
+            if(result){
+                return res.status(200).send({add : true})
+            }
+        })
+    } 
+    if(mode === "WM"){
+        const sql = `UPDATE test_result SET WM=${parseInt(score)} WHERE codeId='${codeId}'`
+        con.query(sql, (err, result) => {
+            if(err) throw err
+            if(result){
+                return res.status(200).send({add : true})
+            }
+        })
+    }  
+    if(mode === "PO"){
+        const sql = `UPDATE test_result SET PO=${parseInt(score)} WHERE codeId='${codeId}'`
+        con.query(sql, (err, result) => {
+            if(err) throw err
+            if(result){
+                return res.status(200).send({add : true})
+            }
+        })
+    }    
+})
+
+router.get("/get-score-state/:id", (req, res) => {
+    console.log(req.params.id)
+    const data = {
+        INH : false,
+        SHF : false,
+        EC : false,
+        WM : false,
+        PO : false
+    }
+    const sql = `SELECT * FROM test_result WHERE codeId='${req.params.id}'`
+    con.query(sql, (err, result) => {
+        if(err) throw err
+        if(result){            
+            for(var i in result){
+                console.log(result[i].SHF)
+                if(result[i].INH === null){
+                    data.INH = false
+                }
+                if(result[i].INH !== null){                    
+                    data.INH = true
+                }
+                if(result[i].SHF !== null){
+                    data.SHF = true
+                }
+                if(result[i].EC !== null){
+                    data.EC = true
+                }
+                if(result[i].WM !== null){
+                    data.WM = true
+                }
+                if(result[i].PO !== null){
+                    data.PO = true
+                }
+            }
+        }
+        return res.status(200).send(data)
+    })
+})
+
+router.get('/get-state-result/:id', (req, res) => {    
+    console.log(req.params.id)
+    const sql = `SELECT * FROM test_result WHERE codeId='${req.params.id}'`
+    con.query(sql, (err, result) => {
+        for(var i in result){            
+            if(result[i].INH !== null && result[i].SHF !== null && result[i].EC !== null && result[i].WM !== null && result[i].PO !== null){
+                return res.status(200).send({result : result[i]})
+            }
+        }
+    })
+})
+
+router.get('/get-result/:id', (req, res) => {
+    const Data = [
+        {INH : 0},
+        {SHF : 0},
+        {EC : 0},
+        {WM : 0},
+        {PO : 0},
+        {total : 0},
+        {gender : ""},
+        {birthday : ""}
+    ]
+    const sql = `SELECT test_result.INH, test_result.SHF, test_result.EC, test_result.WM, test_result.PO, allstudent.gender, allstudent.birthday FROM test_result INNER JOIN allstudent ON test_result.codeId=allstudent.codeId WHERE test_result.codeId='${req.params.id}'`
+    con.query(sql, (err, result) => {
+        var total = 0
+        if(err) throw err
+        if(result){
+            for(var i in result){
+                Data[0].INH = result[i].INH
+                Data[1].SHF = result[i].SHF
+                Data[2].EC = result[i].EC
+                Data[3].WM = result[i].WM
+                Data[4].PO = result[i].PO
+                Data[6].gender = result[i].gender
+                Data[7].birthday = result[i].birthday
+                total += result[i].INH
+                total += result[i].SHF
+                total += result[i].EC
+                total += result[i].WM 
+                total += result[i].PO                
+            }
+        }
+        if(total !== 0){
+            const sql_result = `UPDATE test_result SET total=${total} WHERE codeId='${req.params.id}'`
+            con.query(sql_result, (err, result) => {
+                if(err) throw err
+                if(result){
+                    Data[5].total = total
+                    console.log(Data)
+                    return res.status(200).send({data : Data})
+                }
+            })
+        }
+    })
+})
+
 function makeid(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
