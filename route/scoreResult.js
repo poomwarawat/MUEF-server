@@ -114,16 +114,11 @@ router.get("/get-result-score/:INH/:SHF/:EC/:WM/:PO/:gender/:age", (req ,res) =>
 
     if(gender === 'male'){
         console.log('male')        
-        T_SCORE_INH = tScoreCalculator(AGE, 29, ALL_TEST[0][0] , "INH")
-        T_SCORE_SHF = tScoreCalculator(AGE, 13, ALL_TEST[1][0] , "SHF")
-        T_SCORE_EC = tScoreCalculator(AGE, 18, ALL_TEST[2][0] , "EC")
-        T_SCORE_WM = tScoreCalculator(AGE, 9, ALL_TEST[3][0] , "WM")
-        T_SCORE_PO = tScoreCalculator(AGE, 17, ALL_TEST[4][0] , "PO")
-        // T_SCORE_INH = tScoreCalculator(AGE, INH_SCORE, ALL_TEST[0][0])
-        // T_SCORE_SHF = tScoreCalculator(AGE, SHF_SCORE, ALL_TEST[1][0])
-        // T_SCORE_EC = tScoreCalculator(AGE, EC_SCORE, ALL_TEST[2][0])
-        // T_SCORE_WM = tScoreCalculator(AGE, WM_SCORE, ALL_TEST[3][0])
-        // T_SCORE_PO = tScoreCalculator(AGE, PO_SCORE, ALL_TEST[4][0])
+        T_SCORE_INH = tScoreCalculator(AGE, INH_SCORE, ALL_TEST[0][0] , "INH")
+        T_SCORE_SHF = tScoreCalculator(AGE, SHF_SCORE, ALL_TEST[1][0] , "SHF")
+        T_SCORE_EC = tScoreCalculator(AGE, EC_SCORE, ALL_TEST[2][0] , "EC")
+        T_SCORE_WM = tScoreCalculator(AGE, WM_SCORE, ALL_TEST[3][0] , "WM")
+        T_SCORE_PO = tScoreCalculator(AGE, PO_SCORE, ALL_TEST[4][0] , "PO")        
     }else if(gender === 'female'){
         console.log('female')
         T_SCORE_INH = tScoreCalculator(AGE, INH_SCORE, ALL_TEST[0][1], "INH")
@@ -148,11 +143,11 @@ function tScoreCalculator(age, score, arrData, name){
     const scoreRule = []
     var tScoreIndex = 0
     const data = arrData  
-    console.log("---------------------")
-    console.log("TEST TYPE : " + name)
-    console.log("AGE : " + age)
-    console.log(data)
-    console.log("---------------------")
+    // console.log("---------------------")
+    // console.log("TEST TYPE : " + name)
+    // console.log("AGE : " + age)
+    // console.log(data)
+    // console.log("---------------------")
 
     for (let index = data.length - 1; index >= 0; index--) {        
         const row = data[index][0]                
@@ -161,15 +156,15 @@ function tScoreCalculator(age, score, arrData, name){
     }    
     for (let index = 0; index < scoreRule.length; index++) {                              
         if(score < scoreRule[0]){             
-            console.log(score + " น้อยกว่า " + scoreRule[0])
+            // console.log(score + " น้อยกว่า " + scoreRule[0])
             tScoreIndex = index  
             break;                        
         }else if(score >= scoreRule[index] && score < scoreRule[index + 1] ){                                    
-            console.log(score + " อยู่ระหว่าง " + scoreRule[index] + " กับ " + scoreRule[index+1])
+            // console.log(score + " อยู่ระหว่าง " + scoreRule[index] + " กับ " + scoreRule[index+1])
             console.log(index)
             tScoreIndex = index                
         }else if(score >= scoreRule[4]){                          
-            console.log(score + " มากกว่า " + scoreRule[4])
+            // console.log(score + " มากกว่า " + scoreRule[4])
             tScoreIndex = index                       
         }
     }        
