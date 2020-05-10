@@ -4,7 +4,13 @@ const con = require('../config/con');
 // const tScore = [60, 55, 50, 45, 40]
 const tScore = [40, 45, 50, 55, 60]
 
-
+const resultText = [
+    ["ควรปรับปรุง", "ต่ำกว่าเกณฑ์เฉลี่ยมาก (ควรปรับปรุง)", "เด็กจำเป็นต้องได้รับการส่งเสริมพัฒนาการคิดเชิงบริหารอย่างเร่งด่วน ครูและพ่อแม่ควรเอาใจใส่ในการส่งเสริมพัฒนาการด้านการคิดเชิงบริหารของเด็กอย่างจริงจังและสม่ำเสมอเพื่อให้เด็กมีพัฒนาการด้าน EF ตามเกณฑ์ของเด็กวัยเดียวกัน"],
+    ["ควรพัฒนา", "ต่ำกว่าเกณฑ์เฉลี่ยเล็กน้อย (ควรพัฒนา)", "เด็กควรได้รับการพัฒนาการคิดเชิงบริหารในด้านนั้นๆให้ดียิ่งขึ้น ครูและพ่อแม่ควรเอาใจใส่ในการส่งเสริมพัฒนาการด้าน EF ของเด็กอย่างต่อเนื่องเพื่อให้เด็กมีพัฒนาการด้าน EF ตามวัย"],
+    ["ดี", "สูงกว่าเกณฑ์เฉลี่ย (ดี)", "ควรส่งเสริมและรักษาพฤติกรรมนี้ให้คงไว้"],
+    ["ปานกลาง", "อยู่ในเกณฑ์เฉลี่ย (ปานกลาง)", "ควรรักษาพฤติกรรมนี้ให้คงไว้ และยังมีโอกาสส่งเสริมให้ดีขึ้นได้อีก"],
+    ["ดีมาก", "สูงกว่าเกณฑ์เฉลี่ยมาก (ดีมาก)", "ควรส่งเสริมและรักษาพฤติกรรมนี้ให้คงไว้"]
+]
 //INH SCORE RULE
 const M_INH = [
     [[0, 0, 29, 29, 30, 34]],
@@ -127,6 +133,13 @@ router.get("/get-result-score/:INH/:SHF/:EC/:WM/:PO/:gender/:age", (req ,res) =>
         T_SCORE_WM = tScoreCalculator(AGE, WM_SCORE, ALL_TEST[3][1], "WM")
         T_SCORE_PO = tScoreCalculator(AGE, PO_SCORE, ALL_TEST[4][1], "PO")
     }
+    const allScore = {
+        T_SCORE_INH,
+        T_SCORE_SHF,
+        T_SCORE_EC,
+        T_SCORE_WM,
+        T_SCORE_PO
+    }
     console.log("---------------------")
     console.log(T_SCORE_INH)
     console.log(T_SCORE_SHF)
@@ -134,6 +147,8 @@ router.get("/get-result-score/:INH/:SHF/:EC/:WM/:PO/:gender/:age", (req ,res) =>
     console.log(T_SCORE_WM)
     console.log(T_SCORE_PO)
     console.log("---------------------")
+
+    return res.status(200).send(allScore)
 })
 
 
@@ -168,7 +183,11 @@ function tScoreCalculator(age, score, arrData, name){
             tScoreIndex = index                       
         }
     }        
-    return tScore[tScoreIndex]
+    const result = {
+        resultText : resultText[tScoreIndex],
+        score : tScore[tScoreIndex]
+    }
+    return result
 }
 
 
