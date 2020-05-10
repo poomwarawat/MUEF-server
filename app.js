@@ -30,10 +30,15 @@ app.use(express.static("public"));
 const authRoute = require('./route/auth');
 const muefTestRoute = require('./route/muefTest');
 const Question = require('./route/question');
+const scoreResult = require('./route/scoreResult');
 
 app.use("/", authRoute)
 app.use("/", muefTestRoute)
 app.use("/", Question)
+app.use("/", scoreResult)
 
-// const PORT = process.env.PORT || 8080;
+
+const PORT = process.env.PORT || 8080;
 app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
+
+
