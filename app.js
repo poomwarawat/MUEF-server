@@ -16,9 +16,9 @@ app.set("view engine", "pug");
 app.enable("trust proxy");
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//connection setup
+// connection setup
 con.connect(function(err) {
-    if (err) throw err;
+    if (err) throw err
     console.log("Connected");
 });
 
@@ -31,14 +31,17 @@ const authRoute = require('./route/auth');
 const muefTestRoute = require('./route/muefTest');
 const Question = require('./route/question');
 const scoreResult = require('./route/scoreResult');
+const adminRoute = require('./route/admin');
 
 app.use("/", authRoute)
 app.use("/", muefTestRoute)
 app.use("/", Question)
 app.use("/", scoreResult)
+app.use("/admin", adminRoute)
 
 
 const PORT = process.env.PORT || 8080;
+
 app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
 
 
