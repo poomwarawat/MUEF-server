@@ -195,7 +195,7 @@ router.get('/get-result/:id', (req, res) => {
         {lastname : ""},
         {codeId : ""},
         {birthdayDate : null},
-        {create : null}
+        {create : null},        
     ]
     const sql = `SELECT allstudent.fname, allstudent.lname, allstudent.create_time, allstudent.codeId, test_result.INH, test_result.SHF, test_result.EC, test_result.WM, test_result.PO, allstudent.gender, allstudent.birthday FROM test_result INNER JOIN allstudent ON test_result.codeId=allstudent.codeId WHERE test_result.codeId='${req.params.id}'`
     con.query(sql, (err, result) => {
@@ -203,15 +203,13 @@ router.get('/get-result/:id', (req, res) => {
         if(err) throw err
         if(result){
             for(var i in result){                
-                const create = new Date(result[i].create_time)
-                console.log(create)
+                const create = new Date(result[i].create_time)                
                 const birthdayTime = new Date(result[i].birthday)
                 const currentTime = new Date()                
                 const difAge = currentTime.getTime() - birthdayTime.getTime()
                 const age = ageCalculator(difAge)
                 const birthdayDate  = `${birthdayTime.getUTCDate() + 1}/${birthdayTime.getUTCMonth() + 1}/${birthdayTime.getUTCFullYear()}`
-                const created = `${create.getUTCDate()}/${create.getUTCMonth() + 1}/${create.getUTCFullYear()}` 
-                console.log(created)
+                const created = `${create.getUTCDate()}/${create.getUTCMonth() + 1}/${create.getUTCFullYear()}`                 
                 Data[0].INH = result[i].INH
                 Data[1].SHF = result[i].SHF
                 Data[2].EC = result[i].EC
@@ -223,7 +221,7 @@ router.get('/get-result/:id', (req, res) => {
                 Data[9].lastname = result[i].lname
                 Data[10].codeId = result[i].codeId
                 Data[11].birthdayDate = birthdayDate
-                Data[12].create = created
+                Data[12].create = created                
                 total += result[i].INH
                 total += result[i].SHF
                 total += result[i].EC
@@ -237,7 +235,7 @@ router.get('/get-result/:id', (req, res) => {
                 if(err) throw err
                 if(result){
                     Data[5].total = total
-                    // console.log(Data)
+                    console.log(Data)
                     return res.status(200).send({data : Data})
                 }
             })
@@ -253,6 +251,8 @@ router.get("/check-total-score/:id", (req, res) => {
             for(var i in result){
                 if(result[i].total !== null){
                     return res.status(200).send({result : true})
+                }else{
+                    return res.status(200).send({result : false})
                 }
             }
         }
