@@ -25,6 +25,7 @@
     "mysql": "^2.18.1",
     "neat-csv": "^5.2.0",
     "node-localstorage": "^2.1.6",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "tedious": "^8.3.0"
   }
 }
