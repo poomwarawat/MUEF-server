@@ -177,7 +177,7 @@ const ALL_TEST = [
 router.get(
   "/get-result-score/:INH/:SHF/:EC/:WM/:PO/:gender/:age",
   (req, res) => {
-    // console.log(req.params)
+    // console.log(req.params);
     const { INH, SHF, EC, WM, PO, gender, age } = req.params;
 
     const ISCI_SCORE = parseInt(INH) + parseInt(EC);
@@ -209,9 +209,6 @@ router.get(
     var T_SCORE_EMI = 0;
 
     var T_SCORE_GEC = 0;
-
-    // console.log("------------------------")
-    // console.log("DEFEAULT INH SCORE : " + INH_SCORE)
 
     if (gender === "male") {
       console.log("male");
@@ -248,7 +245,7 @@ router.get(
       T_SCORE_GEC,
     };
     // console.log("---------------------")
-    // console.log(T_SCORE_INH)
+    // console.log(T_SCORE_INH);
     // console.log(T_SCORE_SHF)
     // console.log(T_SCORE_EC)
     // console.log(T_SCORE_WM)
@@ -348,6 +345,7 @@ function tScoreCalculator(age, score, arrData, name) {
   const scoreRule = [];
   var tScoreIndex = 0;
   const data = arrData;
+  console.log(score);
   // console.log("---------------------")
   // console.log("TEST TYPE : " + name)
   // console.log("AGE : " + age)
@@ -375,7 +373,7 @@ function tScoreCalculator(age, score, arrData, name) {
   }
   const result = {
     resultText: resultText[tScoreIndex],
-    score: tScore2[tScoreIndex],
+    score: tScore[tScoreIndex],
   };
   return result;
 }
@@ -411,7 +409,7 @@ function tScoreCalculator2(age, score, arrData, name) {
   }
   const result = {
     resultText: resultText[tScoreIndex],
-    score: tScore[tScoreIndex],
+    score: tScore2[tScoreIndex],
   };
   return result;
 }

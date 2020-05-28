@@ -359,8 +359,10 @@ router.get("/get-result/:id", (req, res) => {
     { codeId: "" },
     { birthdayDate: null },
     { create: null },
+    { schoolname: "" },
+    { province: "" },
   ];
-  const sql = `SELECT allstudent.fname, allstudent.lname, allstudent.create_time, allstudent.codeId, test_result.INH, test_result.SHF, test_result.EC, test_result.WM, test_result.PO, allstudent.gender, allstudent.birthday FROM test_result INNER JOIN allstudent ON test_result.codeId=allstudent.codeId WHERE test_result.codeId='${req.params.id}'`;
+  const sql = `SELECT allstudent.fname, allstudent.province, allstudent.lname, allstudent.schoolname, allstudent.create_time, allstudent.codeId, test_result.INH, test_result.SHF, test_result.EC, test_result.WM, test_result.PO, allstudent.gender, allstudent.birthday FROM test_result INNER JOIN allstudent ON test_result.codeId=allstudent.codeId WHERE test_result.codeId='${req.params.id}'`;
   con.query(sql, (err, result) => {
     var total = 0;
     if (err) throw err;
@@ -389,6 +391,8 @@ router.get("/get-result/:id", (req, res) => {
         Data[10].codeId = result[i].codeId;
         Data[11].birthdayDate = birthdayDate;
         Data[12].create = created;
+        Data[13].schoolname = result[i].schoolname;
+        Data[14].province = result[i].province;
         total += result[i].INH;
         total += result[i].SHF;
         total += result[i].EC;
@@ -425,8 +429,10 @@ router.get("/get-result-102/:id", (req, res) => {
     { codeId: "" },
     { birthdayDate: null },
     { create: null },
+    { schoolname: "" },
+    { province: "" },
   ];
-  const sql = `SELECT allstudent.fname, allstudent.lname, allstudent.create_time, allstudent.codeId, test_result2.INH, test_result2.SHF, test_result2.EC, test_result2.WM, test_result2.PO, allstudent.gender, allstudent.birthday FROM test_result2 INNER JOIN allstudent ON test_result2.codeId=allstudent.codeId WHERE test_result2.codeId='${req.params.id}'`;
+  const sql = `SELECT allstudent.fname, allstudent.province, allstudent.schoolname, allstudent.lname, allstudent.create_time, allstudent.codeId, test_result2.INH, test_result2.SHF, test_result2.EC, test_result2.WM, test_result2.PO, allstudent.gender, allstudent.birthday FROM test_result2 INNER JOIN allstudent ON test_result2.codeId=allstudent.codeId WHERE test_result2.codeId='${req.params.id}'`;
   con.query(sql, (err, result) => {
     var total = 0;
     if (err) throw err;
@@ -455,6 +461,8 @@ router.get("/get-result-102/:id", (req, res) => {
         Data[10].codeId = result[i].codeId;
         Data[11].birthdayDate = birthdayDate;
         Data[12].create = created;
+        Data[13].schoolname = result[i].schoolname;
+        Data[14].province = result[i].province;
         total += result[i].INH;
         total += result[i].SHF;
         total += result[i].EC;
