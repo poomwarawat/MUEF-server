@@ -2,10 +2,10 @@ const mysql = require("mysql");
 const dotenv = require("dotenv");
 dotenv.config();
 const con = mysql.createConnection({
-  host: "mueftest.cj1zdonzvbje.us-east-2.rds.amazonaws.com",
-  port: "3306",
-  user: "root",
-  password: "poom0925350380",
+  host: "localhost",
+  port: "8889",
+  user: "poomwarawat1",
+  password: "111111",
   database: "muef",
 });
 // host: "mueftest.cj1zdonzvbje.us-east-2.rds.amazonaws.com",
