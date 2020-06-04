@@ -39,15 +39,33 @@ router.post("/auth-sign-in", (req, res) => {
   const { username, password } = req.body;
   //hash password with md5
   const hash_password = md5(password);
+  console.log(hash_password);
   //select with sql database where username and password condition
-  const sql = `SELECT id, fname, lname, username FROM user WHERE username='${username}' AND password='${hash_password}'`;
+  const sql = `SELECT id, fname, lname, username, status FROM user WHERE username='${username}' AND password='${hash_password}'`;
   con.query(sql, (err, result) => {
     //sending server error
     if (err) return res.status(500).send(err);
     //sending response with params
-    if (result) {
-      console.log(result);
-      return res.status(200).send({ user: result, access: md5(username) });
+    if (result.length > 0) {
+      console.log(result[0]);
+      if (result[0].status === "admin") {
+        res.status(200).send({
+          user: result,
+          status: "admin",
+          access: md5(result[0].username),
+        });
+      }
+      if (result[0].status === "user") {
+        res
+          .status(200)
+          .send({
+            user: result,
+            status: "user",
+            access: md5(result[0].username),
+          });
+      }
+    } else {
+      res.send({ error: "กรุณาตรวจสอบชื่อผู้ใช้งานหรือรหัสผ่าน" });
     }
   });
 });
@@ -85,9 +103,9 @@ router.post("/register", (req, res) => {
       }
     }
     //insert request to database
-    const sql_regis = `INSERT INTO user (fname, lname, username, password, salt) VALUES ("${firstname}", "${lastname}", "${username}", "${hash_password}", "${md5(
+    const sql_regis = `INSERT INTO user (fname, lname, username, password, salt, status) VALUES ("${firstname}", "${lastname}", "${username}", "${hash_password}", "${md5(
       username
-    )}")`;
+    )}", "user")`;
     con.query(sql_regis, (err, result) => {
       console.log(result);
       if (err) return res.status(500).send(err);
@@ -125,6 +143,10 @@ router.post("/login-page", (req, res) => {
       token,
     });
   });
+});
+
+router.get("test-login-page", (req, res) => {
+  console.log("Warawat lailerd");
 });
 
 function verifytoken(req, res, next) {

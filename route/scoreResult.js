@@ -179,7 +179,7 @@ router.get(
   (req, res) => {
     // console.log(req.params);
     const { INH, SHF, EC, WM, PO, gender, age } = req.params;
-
+    console.log(req.params);
     const ISCI_SCORE = parseInt(INH) + parseInt(EC);
     const FI_SCORE = parseInt(SHF) + parseInt(EC);
     const EMI_SCORE = parseInt(WM) + parseInt(PO);
@@ -244,13 +244,13 @@ router.get(
       T_SCORE_EMI,
       T_SCORE_GEC,
     };
-    // console.log("---------------------")
-    // console.log(T_SCORE_INH);
-    // console.log(T_SCORE_SHF)
-    // console.log(T_SCORE_EC)
-    // console.log(T_SCORE_WM)
-    // console.log(T_SCORE_PO)
-    // console.log("---------------------")
+    console.log("---------------------");
+    console.log(T_SCORE_INH);
+    console.log(T_SCORE_SHF);
+    console.log(T_SCORE_EC);
+    console.log(T_SCORE_WM);
+    console.log(T_SCORE_PO);
+    console.log("---------------------");
 
     return res.status(200).send(allScore);
   }
@@ -261,7 +261,7 @@ router.get(
   (req, res) => {
     // console.log(req.params)
     const { INH, SHF, EC, WM, PO, gender, age } = req.params;
-
+    console.log(req.params);
     const ISCI_SCORE = parseInt(INH) + parseInt(EC);
     const FI_SCORE = parseInt(SHF) + parseInt(EC);
     const EMI_SCORE = parseInt(WM) + parseInt(PO);

@@ -1,14 +1,50 @@
 const router = require("express").Router();
 const con = require("../config/con");
+const md5 = require("md5");
 
 router.get("/get-user", (req, res) => {
   console.log("Get user");
-  const sql = "SELECT * FROM user";
+  const sql = "SELECT fname, lname, id , username, created FROM user";
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
       console.log(result);
       return res.status(200).send(result);
+    }
+  });
+});
+
+router.get("/get-user-data/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = `SELECT fname, lname, id , username, created FROM user WHERE id=${id}`;
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    if (result) {
+      console.log(result);
+      return res.status(200).send(result);
+    }
+  });
+});
+
+router.post("/update-profile", (req, res) => {
+  const { firstname, lastname, id } = req.body;
+  const sql = `UPDATE user SET fname='${firstname}', lname='${lastname}' WHERE id=${id}`;
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    if (result) {
+      res.send({ update: true });
+    }
+  });
+});
+
+router.post("/update-password", (req, res) => {
+  const { password, id } = req.body;
+  const HashPassword = md5(password);
+  const sql = `UPDATE user SET password='${HashPassword}' WHERE id=${id}`;
+  con.query(sql, (err, result) => {
+    if (err) throw err;
+    if (result) {
+      res.send({ update: true });
     }
   });
 });
@@ -59,6 +95,23 @@ router.post("/search-student", (req, res) => {
   });
 });
 
+router.get("/get-all-username", (req, res) => {
+  console.log("Start");
+  const sql = "SELECT username from user";
+  try {
+    con.query(sql, (err, result) => {
+      if (err) throw err;
+      if (result) {
+        console.log(result);
+        res.send({ username: result });
+      }
+    });
+  } catch (e) {
+    conosle.log(e);
+    res.send({ error: e });
+  }
+});
+
 router.post("/upload-csv-data", (req, res) => {
   var count = 0;
   for (let index = 1; index <= req.body.LengthData; index++) {
@@ -78,12 +131,16 @@ router.post("/upload-csv-data", (req, res) => {
     (fname, lname, nname, gender, birthday, salary, stdCode, stdRoom, 
       schoolname, region, district, province, codeId, user) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const splitTime = splitData[5].split("/");
+    const newDate = `${splitTime[1]}/${splitTime[0]}/${splitTime[2]}`;
+    const newTimeStamp = new Date(newDate);
+    console.log(Date.parse(newTimeStamp));
     const Data = [
       splitData[1],
       splitData[2],
       splitData[3],
       splitData[4],
-      splitData[5],
+      Date.parse(newTimeStamp),
       splitData[6],
       splitData[7],
       splitData[8],
@@ -95,15 +152,16 @@ router.post("/upload-csv-data", (req, res) => {
       req.body.username,
     ];
     const values = Object.values(Data);
-    con.query(sql, values, (err, result) => {
-      if (err) throw err;
-      if (result) {
-        count += 1;
-        if (count === parseInt(req.body.LengthData)) {
-          return res.status(200).send({ add: true });
-        }
-      }
-    });
+    // console.log(values);
+    // con.query(sql, values, (err, result) => {
+    //   if (err) throw err;
+    //   if (result) {
+    //     count += 1;
+    //     if (count === parseInt(req.body.LengthData)) {
+    //       return res.status(200).send({ add: true });
+    //     }
+    //   }
+    // });
   }
 });
 
