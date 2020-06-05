@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const con = require("../config/con");
 const md5 = require("md5");
+const moment = require("moment");
 
 router.get("/get-user", (req, res) => {
   console.log("Get user");
@@ -132,15 +133,19 @@ router.post("/upload-csv-data", (req, res) => {
       schoolname, region, district, province, codeId, user) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     const splitTime = splitData[5].split("/");
-    const newDate = `${splitTime[1]}/${splitTime[0]}/${splitTime[2]}`;
-    const newTimeStamp = new Date(newDate);
-    console.log(Date.parse(newTimeStamp));
+    console.log(splitTime);
+    const newSplittime = `${splitTime[2]}-${splitTime[1]}-${splitTime[0]}`;
+    console.log(newSplittime);
+    const newDate = new Date(newSplittime);
+    const newTime = moment(newDate).format("llll");
+    console.log(newTime);
+    // const newTimeDate = Date.parse(newTimeStamp);
     const Data = [
       splitData[1],
       splitData[2],
       splitData[3],
       splitData[4],
-      Date.parse(newTimeStamp),
+      newTime,
       splitData[6],
       splitData[7],
       splitData[8],
@@ -152,16 +157,16 @@ router.post("/upload-csv-data", (req, res) => {
       req.body.username,
     ];
     const values = Object.values(Data);
-    // console.log(values);
-    // con.query(sql, values, (err, result) => {
-    //   if (err) throw err;
-    //   if (result) {
-    //     count += 1;
-    //     if (count === parseInt(req.body.LengthData)) {
-    //       return res.status(200).send({ add: true });
-    //     }
-    //   }
-    // });
+    console.log(values);
+    con.query(sql, values, (err, result) => {
+      if (err) throw err;
+      if (result) {
+        count += 1;
+        if (count === parseInt(req.body.LengthData)) {
+          return res.status(200).send({ add: true });
+        }
+      }
+    });
   }
 });
 
