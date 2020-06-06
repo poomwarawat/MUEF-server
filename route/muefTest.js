@@ -520,6 +520,27 @@ router.get("/check-total-score-102/:id", (req, res) => {
   });
 });
 
+router.post("/update-student-data", (req, res) => {
+  const key = Object.keys(req.body);
+  const keyLength = key.length;
+  var completeUpdate = 0;
+  console.log(keyLength);
+  const { id } = req.body;
+  for (let index = 1; index < key.length; index++) {
+    const data = req.body[key[index]];
+    const sql = `UPDATE allstudent SET ${key[index]}='${data}' WHERE codeId='${id}'`;
+    con.query(sql, (err, result) => {
+      if (err) throw err;
+      if (result) {
+        completeUpdate += 1;
+        if (completeUpdate === keyLength - 1) {
+          res.send({ update: true });
+        }
+      }
+    });
+  }
+});
+
 function ageCalculator(ageDifMs) {
   const ageDate = new Date(ageDifMs);
   const ageYear = Math.abs(ageDate.getUTCFullYear() - 1970);
