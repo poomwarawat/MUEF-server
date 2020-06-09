@@ -11,7 +11,7 @@ router.get("/get-register", (req, res) => {
         const stringTime = await JSON.stringify(time);
         const splitTime = await stringTime.split("T")[0];
         const splitDouble = await splitTime.split('"')[1];
-
+        //test
         const date = dateArr.find((date) => date[0] === splitDouble);
         if (!date) {
           dateArr.push([splitDouble, 1]);
