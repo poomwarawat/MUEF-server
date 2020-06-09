@@ -31,12 +31,14 @@ const muefTestRoute = require("./route/muefTest");
 const Question = require("./route/question");
 const scoreResult = require("./route/scoreResult");
 const adminRoute = require("./route/admin");
+const dashBoard = require("./route/dashboard");
 
 app.use("/", authRoute);
 app.use("/", muefTestRoute);
 app.use("/", Question);
 app.use("/", scoreResult);
 app.use("/admin", adminRoute);
+app.use("/dashboard", dashBoard);
 
 const PORT = process.env.PORT || 4000;
 
