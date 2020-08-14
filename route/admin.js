@@ -133,12 +133,9 @@ router.post("/upload-csv-data", (req, res) => {
       schoolname, region, district, province, codeId, user) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     const splitTime = splitData[5].split("/");
-    console.log(splitTime);
     const newSplittime = `${splitTime[2]}-${splitTime[1]}-${splitTime[0]}`;
-    console.log(newSplittime);
     const newDate = new Date(newSplittime);
     const newTime = moment(newDate).format("llll");
-    console.log(newTime);
     // const newTimeDate = Date.parse(newTimeStamp);
     const Data = [
       splitData[1],
@@ -154,7 +151,7 @@ router.post("/upload-csv-data", (req, res) => {
       splitData[11],
       splitData[12],
       codeID,
-      req.body.username,
+      splitData[15],
     ];
     const values = Object.values(Data);
     console.log(values);
