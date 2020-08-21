@@ -6,7 +6,7 @@ router.get("/GET-INH", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
@@ -17,7 +17,7 @@ router.get("/GET-INH-102", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
@@ -28,7 +28,7 @@ router.get("/GET-SHF", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
@@ -39,7 +39,7 @@ router.get("/GET-SHF-102", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
@@ -50,7 +50,7 @@ router.get("/GET-EC", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
@@ -61,7 +61,7 @@ router.get("/GET-EC-102", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
@@ -72,7 +72,7 @@ router.get("/GET-WM", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
@@ -83,7 +83,7 @@ router.get("/GET-WM-102", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
@@ -94,7 +94,7 @@ router.get("/GET-PO", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
@@ -105,7 +105,7 @@ router.get("/GET-PO-102", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      res.setHeader("Content-Type", "application/json; charset=utf-8");
+      res.charset = "utf-8";
       return res.status(200).send(result);
     }
   });
