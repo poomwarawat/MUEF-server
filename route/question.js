@@ -7,6 +7,7 @@ router.get("/GET-INH", (req, res) => {
     if (err) throw err;
     if (result) {
       res.charset = "utf-8";
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
       return res.status(200).send(result);
     }
   });
