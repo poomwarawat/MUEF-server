@@ -10,6 +10,7 @@ router.get("/get-user", (req, res) => {
     if (err) throw err;
     if (result) {
       console.log(result);
+      res.header("Content-Type", "application/json; charset=utf-8");
       return res.status(200).send(result);
     }
   });
@@ -22,6 +23,7 @@ router.get("/get-user-data/:id", (req, res) => {
     if (err) throw err;
     if (result) {
       console.log(result);
+      res.header("Content-Type", "application/json; charset=utf-8");
       return res.status(200).send(result);
     }
   });
@@ -33,6 +35,7 @@ router.post("/update-profile", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
+      res.header("Content-Type", "application/json; charset=utf-8");
       res.send({ update: true });
     }
   });
@@ -45,6 +48,7 @@ router.post("/update-password", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
+      res.header("Content-Type", "application/json; charset=utf-8");
       res.send({ update: true });
     }
   });
@@ -56,7 +60,7 @@ router.get("/get-student", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result) {
-      console.log(result);
+      res.header("Content-Type", "application/json; charset=utf-8");
       return res.status(200).send(result);
     }
   });
@@ -73,8 +77,10 @@ router.post("/search-user", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result.length > 0) {
+      res.header("Content-Type", "application/json; charset=utf-8");
       res.send(result);
     } else {
+      res.header("Content-Type", "application/json; charset=utf-8");
       res.send({ not: true });
     }
   });
@@ -89,8 +95,10 @@ router.post("/search-student", (req, res) => {
   con.query(sql, (err, result) => {
     if (err) throw err;
     if (result.length > 0) {
+      res.header("Content-Type", "application/json; charset=utf-8");
       res.send(result);
     } else {
+      res.header("Content-Type", "application/json; charset=utf-8");
       res.send({ not: true });
     }
   });
@@ -103,12 +111,12 @@ router.get("/get-all-username", (req, res) => {
     con.query(sql, (err, result) => {
       if (err) throw err;
       if (result) {
-        console.log(result);
+        res.header("Content-Type", "application/json; charset=utf-8");
         res.send({ username: result });
       }
     });
   } catch (e) {
-    conosle.log(e);
+    res.header("Content-Type", "application/json; charset=utf-8");
     res.send({ error: e });
   }
 });
@@ -160,6 +168,7 @@ router.post("/upload-csv-data", (req, res) => {
       if (result) {
         count += 1;
         if (count === parseInt(req.body.LengthData)) {
+          res.header("Content-Type", "application/json; charset=utf-8");
           return res.status(200).send({ add: true });
         }
       }
