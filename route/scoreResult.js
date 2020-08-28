@@ -329,13 +329,14 @@ router.get(
       T_SCORE_EMI,
       T_SCORE_GEC,
     };
-    console.log("---------------------");
-    console.log(T_SCORE_INH);
-    console.log(T_SCORE_SHF);
-    console.log(T_SCORE_EC);
-    console.log(T_SCORE_WM);
-    console.log(T_SCORE_PO);
-    console.log("---------------------");
+    // console.log("---------------------");
+    // console.log(T_SCORE_INH);
+    // console.log(T_SCORE_SHF);
+    // console.log(T_SCORE_EC);
+    // console.log(T_SCORE_WM);
+    // console.log(T_SCORE_PO);
+    // console.log("---------------------");
+    console.log(allScore);
 
     return res.status(200).send(allScore);
   }
@@ -346,11 +347,6 @@ function tScoreCalculator(age, score, arrData, name) {
   var tScoreIndex = 0;
   const data = arrData;
   console.log(score);
-  // console.log("---------------------")
-  // console.log("TEST TYPE : " + name)
-  // console.log("AGE : " + age)
-  // console.log(data)
-  // console.log("---------------------")
 
   for (let index = data.length - 1; index >= 0; index--) {
     const row = data[index][0];
